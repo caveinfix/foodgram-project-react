@@ -86,11 +86,14 @@ class Favorite(models.Model):
         on_delete=models.CASCADE,
     )
     constraints = [
-            models.UniqueConstraint(fields=('user', 'recipe'),
-                                    name='favorite_recipes_for_unique_user')
-        ]
+        models.UniqueConstraint(
+            fields=("user", "recipe"), name="favorite_recipes_for_unique_user"
+        )
+    ]
+
     def __str__(self):
-        return f'{self.recipe} в избранном у {self.user}'
+        return f"{self.recipe} в избранном у {self.user}"
+
 
 # class Favorite(models.Model):
 #     "Модель для избранного."
@@ -125,9 +128,10 @@ class Shopping(models.Model):
         on_delete=models.CASCADE,
     )
     constraints = [
-            models.UniqueConstraint(fields=('user', 'recipe'),
-                                    name='favorite_recipes_for_unique_user')
-        ]
-    def __str__(self):
-        return f'{self.recipe} в избранном у {self.user}'
+        models.UniqueConstraint(
+            fields=("user", "recipe"), name="favorite_recipes_for_unique_user"
+        )
+    ]
 
+    def __str__(self):
+        return f"{self.recipe} в избранном у {self.user}"

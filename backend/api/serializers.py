@@ -1,15 +1,11 @@
-from django.contrib.auth.models import AnonymousUser
-from rest_framework import serializers
-from recipes.models import Recipe, Ingredient, IngredientRecipe, Tag, Favorite, Shopping
-from users.models import Follow
 import base64
-from users.models import User
-from django.core.files.base import ContentFile
-from django.shortcuts import get_object_or_404
-from rest_framework.exceptions import ValidationError
-from django.contrib.auth.models import AnonymousUser
 
-from rest_framework.validators import UniqueTogetherValidator
+from django.core.files.base import ContentFile
+from rest_framework import serializers
+
+from recipes.models import (Favorite, Ingredient, IngredientRecipe, Recipe,
+                            Shopping, Tag)
+from users.models import Follow, User
 
 
 class Base64ImageField(serializers.ImageField):
@@ -84,7 +80,11 @@ class SubscriptionRecipeSerializer(serializers.ModelSerializer):
 
 
 class SubscribtionsSerializer(serializers.ModelSerializer):
-    """Сериалайзер для отображения авторов с рецептами в подписке, на которых подписан пользователь."""
+    """
+    Сериалайзер для отображения авторов с
+    рецептами в подписке, на которых подписан
+    пользователь.
+    """
 
     email = serializers.ReadOnlyField(source="author.email")
     id = serializers.ReadOnlyField(source="author.id")
@@ -109,19 +109,30 @@ class SubscribtionsSerializer(serializers.ModelSerializer):
         )
 
     def get_recipes(self, obj):
-        """Получаем доступ к объекту запроса, а затем получить атрибут пользователя."""
-        # Объект requestсодержит информацию о запросе пользователя. Какие данные они отправили на страницу, откуда они поступают и т. д.
+        """
+        Получаем доступ к объекту запроса,
+        а затем получить атрибут пользователя."""
+        # Объект requestсодержит информацию
+        # о запросе пользователя. Какие данные они
+        # отправили на страницу, откуда они поступают и т. д.
         request = self.context.get("request")
-        # #request.GETсодержит переменные GET. Это то, что вы видите в адресной строке вашего браузера. Этот .get()метод используется для словарей. Ваш фрагмент кода говорит: «Получите значение переменной GET с именем« страница http://localhost/api/users/subscriptions/?page=1&limit=6&recipes_limit=3 ».
+        # #request.GETсодержит переменные GET. Это то,
+        # что вы видите в адресной строке вашего браузера.
+        # Этот .get()метод используется для словарей.
+        # Ваш фрагмент кода говорит: «Получите значение переменной
+        # GET с именем« страница
+        # http://..?page=1&limit=6&recipes_limit=3 ».
         # Получим значение recipes_limit = 3
         recipes_limit = request.GET.get("recipes_limit")
-        # Получим queryset всех рецептов автора [<recipe:name1>,<recipe:name2>,.....]
+        # Получим queryset всех рецептов автора
+        # [<recipe:name1>,<recipe:name2>,.....]
         queryset = Recipe.objects.filter(author=obj.author)
         # Если 3
         if recipes_limit:
             # Присвоим значению queryset первые 3 объекта
             queryset = queryset[: int(recipes_limit)]
-            # Передадим наш queryset SubscriptionRecipeSerializer и он выведет только 3 объекта
+            # Передадим наш queryset SubscriptionRecipeSerializer
+            # и он выведет только 3 объекта
         return SubscriptionRecipeSerializer(queryset, many=True).data
 
     @staticmethod
@@ -207,7 +218,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             "image",
             "tags",
             "is_favorited",
-            "is_in_shopping_cart"
+            "is_in_shopping_cart",
         )
 
     def get_is_favorited(self, obj):
@@ -216,13 +227,13 @@ class RecipeSerializer(serializers.ModelSerializer):
             return False
         return Recipe.objects.filter(favorite__user=user, id=obj.id).exists()
 
-
     def get_is_in_shopping_cart(self, obj):
         user = self.context.get("request").user
         if user.is_anonymous:
             return False
-        return Recipe.objects.filter(shopping_cart__user=user, id=obj.id).exists()
-
+        return Recipe.objects.filter(
+            shopping_cart__user=user, id=obj.id
+        ).exists()
 
     def validate(self, data):
         ingredients = self.initial_data.get("ingredients")
@@ -289,9 +300,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class ShopingRecipeSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Shopping
         fields = ("id", "user", "recipe")

@@ -1,47 +1,36 @@
-from rest_framework import viewsets, permissions
 from django.db.models import Sum
-import csv
 from django.http import HttpResponse
-
-from rest_framework.pagination import PageNumberPagination
-
-
-from recipes.models import (
-    Recipe,
-    Ingredient,
-    Tag,
-    Favorite,
-    Shopping,
-    IngredientRecipe,
-)
-
-from .serializers import (
-    RecipeSerializer,
-    IngredientSerializer,
-    TagSerializer,
-    UserSerializer,
-    SubscribeSerializer,
-    SubscribtionsSerializer,
-    FavoriteRecipeSerializer,
-    ShopingRecipeSerializer,
-)
-from .filters import IngredientSearchFilter, RecipeFilter
-
-from rest_framework import viewsets, status, filters
-
-from .permissions import IsAuthorOrReadOnly
-
-
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.http import HttpResponse
-from http import HTTPStatus
-from rest_framework.decorators import action
-from users.models import Follow, User
-from rest_framework.generics import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
+from rest_framework import filters, permissions, status, viewsets
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from recipes.models import (
+    Favorite,
+    Ingredient,
+    IngredientRecipe,
+    Recipe,
+    Shopping,
+    Tag,
+)
+from users.models import Follow, User
+
+from .filters import IngredientSearchFilter, RecipeFilter
+from .permissions import IsAuthorOrReadOnly
+from .serializers import (
+    FavoriteRecipeSerializer,
+    IngredientSerializer,
+    RecipeSerializer,
+    ShopingRecipeSerializer,
+    SubscribeSerializer,
+    SubscribtionsSerializer,
+    TagSerializer,
+    UserSerializer,
+)
 
 
 class UserViewSet(UserViewSet):
@@ -171,7 +160,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         )
         for ingredient in ingredients:
             output = f"""
-            {ingredient["ingredient__name"]} - {ingredient["value"]} {ingredient["ingredient__measurement_unit"]}    
+            {ingredient["ingredient__name"]} - {
+                ingredient["value"]} {
+                    ingredient["ingredient__measurement_unit"]}
             """
             response.write(output)
 
