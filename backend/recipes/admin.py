@@ -1,5 +1,5 @@
 from django.contrib import admin
-from users.models import Follow, User
+from users.models import User
 
 from .models import Ingredient, IngredientRecipe, Recipe, Tag
 
@@ -8,24 +8,31 @@ from .models import Ingredient, IngredientRecipe, Recipe, Tag
 #     autocomplete_fields = ('ingredients',)
 
 
-
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("id", "username",)
+    list_display = (
+        "id",
+        "username",
+    )
+
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ("id", "name",)
+    list_display = (
+        "id",
+        "name",
+    )
     # inlines = (RecipeIngredientsAdmin,)
+
 
 class IngredientAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
+
 class TagAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
+
 class IngredientRecipeAdmin(admin.ModelAdmin):
     list_display = ("id", "amount")
-
-
 
 
 admin.site.register(Recipe, RecipeAdmin)
