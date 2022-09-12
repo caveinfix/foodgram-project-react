@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
 
 
 class User(AbstractUser):
@@ -39,8 +38,8 @@ class Follow(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['user', 'author'],
-                name='unique_follow',
+                fields=["user", "author"],
+                name="unique_follow",
             ),
         ]
 
