@@ -27,6 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     is_subscribed = serializers.SerializerMethodField()
     # username = serializers.SlugField()
+    # username = serializers.SlugField()
 
     class Meta:
         model = User
