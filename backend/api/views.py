@@ -2,6 +2,26 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from djoser.views import UserViewSet
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+
+from .filters import IngredientSearchFilter, RecipeFilter
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
+from .serializers import (
+    FallowAuthorSerializer,
+    FavoriteRecipeSerializer,
+    FollowsSerializer,
+    IngredientSerializer,
+    RecipeSerializer,
+    ShopingRecipeSerializer,
+    TagSerializer,
+    UserSerializer,
+)
+from .utils import delete_method, post_method
 from recipes.models import (
     Favorite,
     Ingredient,
@@ -10,28 +30,7 @@ from recipes.models import (
     Shopping,
     Tag,
 )
-from rest_framework import filters, permissions, status, viewsets, serializers
-from rest_framework.decorators import action
-from rest_framework.generics import get_object_or_404
-from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
 from users.models import Follow, User
-
-from .filters import IngredientSearchFilter, RecipeFilter
-from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
-from .serializers import (
-    FavoriteRecipeSerializer,
-    IngredientSerializer,
-    RecipeSerializer,
-    ShopingRecipeSerializer,
-    FollowsSerializer,
-    TagSerializer,
-    UserSerializer,
-    FallowAuthorSerializer,
-)
-
-from .utils import delete_method, post_method
 
 
 class UserViewSet(UserViewSet):
