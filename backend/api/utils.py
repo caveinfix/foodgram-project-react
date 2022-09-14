@@ -1,7 +1,8 @@
-from recipes.models import Recipe
 from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
+
+from recipes.models import Recipe
 
 
 def post_method(request, pk, get_serializer):
@@ -24,5 +25,3 @@ def delete_method(request, pk, get_model):
     )
     object.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
-
-
