@@ -19,7 +19,7 @@ from rest_framework.response import Response
 from users.models import Follow, User
 
 from .filters import IngredientSearchFilter, RecipeFilter
-from .permissions import IsAuthorOrReadOnly
+from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import (
     FavoriteRecipeSerializer,
     IngredientSerializer,
@@ -39,11 +39,8 @@ class UserViewSet(UserViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    filter_backends = (
-        DjangoFilterBackend,
-        filters.SearchFilter,
-    )
     search_fields = ("username", "email")
+    pagination_class = PageNumberPagination
     permission_classes = (AllowAny,)
 
     @action(
@@ -87,7 +84,7 @@ class UserViewSet(UserViewSet):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
-    permission_classes = (IsAuthorOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly,)
     pagination_class = PageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
@@ -146,17 +143,18 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return response
 
 
-class IngredientViewSet(viewsets.ModelViewSet):
+class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
+    "Вьюесет для инридиентов с фильтрацией по имени."
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
     pagination_class = None
     filter_backends = (IngredientSearchFilter,)
     search_fields = ("^name",)
 
 
-class TagViewSet(viewsets.ModelViewSet):
+class TagViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (IsAdminOrReadOnly,)
     pagination_class = None

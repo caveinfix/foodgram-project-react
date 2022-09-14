@@ -8,11 +8,10 @@ class User(AbstractUser):
     email = models.EmailField("Электронная почта", max_length=50, unique=True)
     first_name = models.CharField("Имя", max_length=50)
     last_name = models.CharField("Фамилия", max_length=50)
-    password = models.CharField("Пароль", max_length=150)
 
     USERNAME_FIELD = "email"
 
-    REQUIRED_FIELDS = ["username", "first_name", "last_name", "password"]
+    REQUIRED_FIELDS = ["username", "first_name", "last_name"]
 
     class Meta:
         verbose_name = "Пользователь"
@@ -24,6 +23,7 @@ class User(AbstractUser):
 
 class Follow(models.Model):
     """Модель для подписчиков."""
+
     user = models.ForeignKey(
         User,
         related_name="follower",
