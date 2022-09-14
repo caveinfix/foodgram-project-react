@@ -1,42 +1,56 @@
 from django.contrib import admin
-from users.models import User
 
-from .models import Ingredient, IngredientRecipe, Recipe, Tag
-
-# class RecipeIngredientsAdmin(admin.StackedInline):
-#     model = IngredientRecipe
-#     autocomplete_fields = ('ingredients',)
-
-
-class UserAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "username",
-    )
+from .models import (
+    Ingredient,
+    Recipe,
+    Tag,
+    IngredientRecipe,
+    Favorite,
+    Shopping,
+)
 
 
-class RecipeAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "name",
-    )
-    # inlines = (RecipeIngredientsAdmin,)
-
-
-class IngredientAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")
-
-
+@admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
 
+@admin.register(Ingredient)
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "measurement_unit")
+    search_fields = ("name",)
+    list_filter = ("name",)
+
+
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+        "favorite",
+        "author",
+    )
+    search_fields = (
+        "name",
+        "author__username",
+    )
+    list_filter = ("tags", "author")
+
+    @admin.display(description="В избранном")
+    def favorite(self, obj):
+        return obj.favorite.count()
+
+
+@admin.register(IngredientRecipe)
 class IngredientRecipeAdmin(admin.ModelAdmin):
-    list_display = ("id", "amount")
+    list_display = ("recipe", "ingredient")
 
 
-admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(Ingredient, IngredientAdmin)
-admin.site.register(Tag, TagAdmin)
-admin.site.register(IngredientRecipe, IngredientRecipeAdmin)
-admin.site.register(User, UserAdmin)
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ("user", "recipe")
+
+
+@admin.register(Shopping)
+class ShoppingAdmin(admin.ModelAdmin):
+    list_display = ("user", "recipe")
