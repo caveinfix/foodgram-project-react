@@ -81,6 +81,7 @@ class UserViewSet(UserViewSet):
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
+    """Вьюсет для рецептов."""
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     permission_classes = (IsOwnerOrReadOnly,)
@@ -143,7 +144,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
-    "Вьюесет для инридиентов с фильтрацией по имени."
+    "Вьюесет для инридиентов."
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -153,6 +154,7 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
+    """Вьюсет для тэгов."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
