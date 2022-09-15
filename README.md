@@ -1,3 +1,3 @@
 # praktikum_new_diplom
 # В процессе...
-Доступен по ссылке http://51.250.18.244/recipes
+Доступен по ссылке http://fgram.ddns.net/recipes
