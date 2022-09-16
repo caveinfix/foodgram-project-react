@@ -221,12 +221,9 @@ class RecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Добавьте ингредиенты!")
         ingredients_list = []
         for ingredient in ingredients:
-            ingredient = ingredient.get("id")
-            if ingredient in ingredients_list:
+            if ingredient["ingredient"].get("id") in ingredients_list:
                 raise serializers.ValidationError("Ингредиент уже добавлен!")
             ingredients_list.append(ingredient)
-        data["ingredient_recipe"] = ingredients
-        data["tags"] = tags
         return data
 
     def create_ingredients(self, ingredients, recipe):
