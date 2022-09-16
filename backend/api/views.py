@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from .filters import IngredientSearchFilter, RecipeFilter
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
 from .serializers import (
-    FallowAuthorSerializer,
+    FollowAuthorSerializer,
     FavoriteRecipeSerializer,
     FollowsSerializer,
     IngredientSerializer,
@@ -51,7 +51,7 @@ class UserViewSet(UserViewSet):
         if request.method == "POST":
             author = get_object_or_404(User, id=id)
             user = request.user
-            serializer = FallowAuthorSerializer(
+            serializer = FollowAuthorSerializer(
                 data={"user": user.id, "author": author.id},
                 context={"request": request},
             )
@@ -144,7 +144,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
-    "Вьюесет для инридиентов."
+    "Вьюесет для ингредиентов."
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -154,7 +154,7 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
-    """Вьюсет для тэгов."""
+    """Вьюсет для тегов."""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)

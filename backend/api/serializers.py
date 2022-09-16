@@ -1,7 +1,3 @@
-import base64
-
-from django.core.files.base import ContentFile
-
 from rest_framework import serializers
 
 from users.models import Follow, User
@@ -13,6 +9,7 @@ from recipes.models import (
     Shopping,
     Tag,
 )
+from api.fields import Base64ImageField
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -24,22 +21,11 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class IngredientSerializer(serializers.ModelSerializer):
-    """Сериалайзер для ингридиента."""
+    """Сериалайзер для ингредиента."""
 
     class Meta:
         model = Ingredient
         fields = "__all__"
-
-
-class Base64ImageField(serializers.ImageField):
-    "Сериалайзер для картинок."
-
-    def to_internal_value(self, data):
-        if isinstance(data, str) and data.startswith("data:image"):
-            format, imgstr = data.split(";base64,")
-            ext = format.split("/")[-1]
-            data = ContentFile(base64.b64decode(imgstr), name="temp." + ext)
-        return super().to_internal_value(data)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -123,7 +109,7 @@ class FollowsSerializer(serializers.ModelSerializer):
         return Recipe.objects.filter(author=obj.author).count()
 
 
-class FallowAuthorSerializer(serializers.ModelSerializer):
+class FollowAuthorSerializer(serializers.ModelSerializer):
     """Сериалайзер для добавления в подписчики."""
 
     class Meta:
@@ -205,16 +191,16 @@ class RecipeSerializer(serializers.ModelSerializer):
         if not tags:
             raise serializers.ValidationError("Нужно выбрать тег!")
         if not ingredients:
-            raise serializers.ValidationError("Добавьте ингридиенты!")
+            raise serializers.ValidationError("Добавьте ингредиенты!")
         lst = []
         for ingredient in ingredients:
             ingredient = ingredient.get("id")
             if ingredient in lst:
-                raise serializers.ValidationError("Ингридиент уже добавлен!")
+                raise serializers.ValidationError("Ингредиент уже добавлен!")
             lst.append(ingredient)
-        data["ingredients"] = ingredients
-        data["tags"] = tags
-        return data
+            data["ingredients"] = ingredients
+            data["tags"] = tags
+            return data
 
     def create(self, validated_data):
         ingredients = validated_data.pop("ingredients")
@@ -227,6 +213,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                 ingredient_id=ingredient.get("id"),
                 amount=ingredient.get("amount"),
             )
+
         return recipe
 
     def update(self, instance, validated_data):
