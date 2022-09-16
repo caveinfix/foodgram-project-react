@@ -18,10 +18,10 @@ def post_method(request, pk, get_serializer):
 
 
 def delete_method(request, pk, get_model):
-    object = get_object_or_404(
+    obj = get_object_or_404(
         get_model,
         recipe=get_object_or_404(Recipe, pk=pk),
         user=request.user,
     )
-    object.delete()
+    obj.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)

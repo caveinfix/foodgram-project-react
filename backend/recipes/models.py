@@ -5,7 +5,7 @@ from users.models import User
 
 
 class Tag(models.Model):
-    "Модель тэгов."
+    "Модель тегов."
     name = models.CharField("Тег", max_length=16, unique=True)
     color = models.CharField("Цвет HEX", max_length=8, unique=True)
     slug = models.SlugField("Slug", unique=True)
@@ -19,13 +19,13 @@ class Tag(models.Model):
 
 
 class Ingredient(models.Model):
-    "Модель ингридиентов."
-    name = models.CharField("Название ингридиента", max_length=40)
+    "Модель ингредиентов."
+    name = models.CharField("Название ингредиента", max_length=40)
     measurement_unit = models.CharField("Единица измерения", max_length=16)
 
     class Meta:
-        verbose_name = "Ингридиент"
-        verbose_name_plural = "Ингридиенты"
+        verbose_name = "Ингредиент"
+        verbose_name_plural = "Ингредиенты"
 
     def __str__(self):
         return self.name
@@ -72,7 +72,7 @@ class Recipe(models.Model):
 
 
 class IngredientRecipe(models.Model):
-    "Модель для указания количества ингридиента в рецепте."
+    "Модель для указания количества ингредиента в рецепте."
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
@@ -83,7 +83,7 @@ class IngredientRecipe(models.Model):
         Ingredient,
         on_delete=models.CASCADE,
         related_name="ingredient_recipe",
-        verbose_name="Ингридиент",
+        verbose_name="Ингредиент",
     )
     amount = models.PositiveIntegerField(
         "Количество",
