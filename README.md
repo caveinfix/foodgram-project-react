@@ -1,1 +1,3 @@
 # praktikum_new_diplom
+# В процессе...
+Доступен по ссылке http://fgram.ddns.net/recipes
