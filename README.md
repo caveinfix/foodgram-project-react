@@ -1,2 +1,3 @@
+![example workflow](https://github.com/caveinfix/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 # Описание в процессе....
 Проект доступен по адресу: http://fgram.ddns.net/recipes
