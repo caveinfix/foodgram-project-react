@@ -11,6 +11,7 @@
 [![Python](https://img.shields.io/badge/-Python-464646?style=flat-square&logo=Python)](https://www.python.org/) [![Django](https://img.shields.io/badge/-Django-464646?style=flat-square&logo=Django)](https://www.djangoproject.com/) [![Django REST Framework](https://img.shields.io/badge/-Django%20REST%20Framework-464646?style=flat-square&logo=Django%20REST%20Framework)](https://www.django-rest-framework.org/) [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat-square&logo=PostgreSQL)](https://www.postgresql.org/) [![Nginx](https://img.shields.io/badge/-NGINX-464646?style=flat-square&logo=NGINX)](https://nginx.org/ru/) [![gunicorn](https://img.shields.io/badge/-gunicorn-464646?style=flat-square&logo=gunicorn)](https://gunicorn.org/) [![docker](https://img.shields.io/badge/-Docker-464646?style=flat-square&logo=docker)](https://www.docker.com/) [![GitHub%20Actions](https://img.shields.io/badge/-GitHub%20Actions-464646?style=flat-square&logo=GitHub%20actions)](https://github.com/features/actions) [![Yandex.Cloud](https://img.shields.io/badge/-Yandex.Cloud-464646?style=flat-square&logo=Yandex.Cloud)](https://cloud.yandex.ru/)
 ## Релиз
 Сайт доступен по ссылке: [fgram.ddns.net](http://fgram.ddns.net/recipes)
+
 Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/)
 
 ## Подготовка к запуску на удаленном сервере
@@ -37,7 +38,7 @@ scp docker-compose.yaml caveinfix@158.160.7.100:/home/caveinfix/
 ```bash
 sudo nano .env
 ```
-далее заполните файл необходимыми параметрами:
+Далее заполните файл необходимыми параметрами:
 ```bash
 DB_ENGINE=django.db.backends.postgresql
 DB_NAME=postgres
@@ -52,11 +53,12 @@ ALLOWED_HOSTS = "IP"
 
 ### Установка docker, docker-compose, PostgreSQL на сервер
 Для успешного запуска предварительно должны быть установлены:
-docker:
+
+Docker:
 ```bash
 sudo apt install docker.io 
 ```
-docker-compose:
+Docker-compose:
 ```bash
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
@@ -67,7 +69,7 @@ sudo apt update
 sudo apt install postgresql postgresql-contrib -y
 ```
 ### Настройки для Workflow :
-- проверка кода на PEP8
+- проверка кода по PEP8
 - сборка и публикация последней версии образа docker на dockerhub
 - автоматический deploy на сервер
 - уведомление в Telegram о завершении Workflow 
@@ -181,6 +183,7 @@ python manage.py createsuperuser
 ## Автор проекта
 
 Филипп [@caveinfix](https://github.com/caveinfix)
+
 e-mail: caveinfix@gmail.com
 
 
