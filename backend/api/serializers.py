@@ -254,7 +254,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         instance.tags.set(tags)
         instance.ingredients.clear()
         self.create_ingredients(recipe=instance, ingredients=ingredients)
-        instance.save()
         return instance
 
     def to_representation(self, instance):

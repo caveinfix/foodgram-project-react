@@ -14,7 +14,7 @@
 
 Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/)
 
-## Подготовка к запуску на удаленном сервере
+## Подготовка к запуску локально
 Сделайте форк и клонируйте репозиторий на локальную машину:
 ```bash
   git clone git@github.com:caveinfix/foodgram-project-react.git
