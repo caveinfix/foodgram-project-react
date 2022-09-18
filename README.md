@@ -92,21 +92,6 @@ TELEGRAM_TO: токен пользователя (получить в userinfobo
 TELEGRAM_TOKEN: токен Вашего бота (получить в BotFather)
 ```
 
-## Запуск проекта на сервере
-Убедитесь, что образы проекта доступны:
-```bash
-sudo docker image ls -a
-```
-Пример:
-```bash
-caveinfix/foodgram_front   latest    01e95d601dd3   21 hours ago    301MB
-caveinfix/foodgram_back    <none>    f526fa76bcf0   21 hours ago    286MB
-```
-Если образы отсутствуют, выполните команды:
-```bash
-sudo docker pull caveinfix/foodgram_back:latest
-sudo docker pullcaveinfix/foodgram_front:latest
-```
 ## Запуск docker-compose
 Выполните команду:
 ```bash

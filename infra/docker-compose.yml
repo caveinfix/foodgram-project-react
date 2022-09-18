@@ -1,12 +1,11 @@
 version: '3.3'
-
 services:
   db:
-    image: postgres:latest
+    image: postgres:13.0-alpine
     volumes:
-      - db:/var/lib/postgresql/data/
+      - postgres:/var/lib/postgresql/data/
     env_file:
-      - .env
+      - ./.env
 
   backend:
     image: caveinfix/foodgram_back:latest
@@ -21,13 +20,14 @@ services:
 
   frontend:
     image: caveinfix/foodgram_front:latest
+    restart: always
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
-      - db
+      - backend
 
   nginx:
-    image: nginx:1.21.3-alpine
+    image: nginx:1.19.3
     ports:
       - "80:80"
     volumes:
@@ -36,13 +36,13 @@ services:
       - ../docs/:/usr/share/nginx/html/api/docs/
       - static_value:/var/html/static/
       - media_value:/var/html/media/
-    restart: always
     depends_on:
+      - db
       - backend
       - frontend
 
 volumes:
-  db:
-  result_build:
+  postgres:
   static_value:
   media_value:
+  
