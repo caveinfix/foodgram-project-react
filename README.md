@@ -12,7 +12,7 @@
 ## Релиз
 Сайт доступен по ссылке: [fgram.ddns.net](http://fgram.ddns.net/recipes)
 
-Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/)
+Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/) Еще не разобрался, выдает 500-ую ошибку
 
 ## Подготовка к запуску локально
 Сделайте форк и клонируйте репозиторий на локальную машину:
