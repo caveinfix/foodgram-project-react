@@ -12,8 +12,6 @@
 ## Релиз
 Сайт доступен по ссылке: [fgram.ddns.net](http://fgram.ddns.net/recipes)
 
-Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/) Еще не разобрался, выдает 500-ую ошибку
-
 Доступ к админке: [fgram.ddns.net/admin/](http://fgram.ddns.net/admin/) (Логин: admin@ya.ru, пароль:admin)
 
 
