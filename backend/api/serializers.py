@@ -114,7 +114,7 @@ class FollowAuthorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Follow
-        fields = ("id", "user", "author")
+        fields = ("user", "author")
 
     def validate(self, data):
         author = data["author"].id
@@ -221,9 +221,13 @@ class RecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Добавьте ингредиенты!")
         ingredients_list = []
         for ingredient in ingredients:
-            if ingredient["ingredient"].get("id") in ingredients_list:
-                raise serializers.ValidationError("Ингредиент уже добавлен!")
-            ingredients_list.append(ingredient)
+            ingredient_id = ingredient["ingredient"]["id"]
+            if ingredient_id in ingredients_list:
+                raise serializers.ValidationError(
+                    "Добавлены повторные ингредиенты!"
+                )
+            ingredients_list.append(ingredient_id)
+
         return data
 
     def create_ingredients(self, ingredients, recipe):

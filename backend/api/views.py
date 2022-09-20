@@ -11,11 +11,13 @@ from rest_framework.response import Response
 
 from .filters import IngredientSearchFilter, RecipeFilter
 from .permissions import IsAdminOrReadOnly, IsOwnerOrReadOnly
+from .pagination import LimitPageNumberPagination
 from .serializers import (
     FollowAuthorSerializer,
     FavoriteRecipeSerializer,
     FollowsSerializer,
     IngredientSerializer,
+    RecipeReadSerializer,
     RecipeSerializer,
     ShopingRecipeSerializer,
     TagSerializer,
@@ -40,7 +42,7 @@ class UserViewSet(UserViewSet):
     serializer_class = UserSerializer
     search_fields = ("username", "email")
     pagination_class = PageNumberPagination
-    permission_classes = (AllowAny,)
+    # permission_classes = (AllowAny,)
 
     @action(
         methods=["POST", "DELETE"],
@@ -72,7 +74,8 @@ class UserViewSet(UserViewSet):
         methods=["GET"], detail=False, permission_classes=[IsAuthenticated]
     )
     def subscriptions(self, request):
-        queryset = Follow.objects.filter(author__following__user=request.user)
+        user = request.user
+        queryset = Follow.objects.filter(user=user)
         page_obj = self.paginate_queryset(queryset)
         serializer = FollowsSerializer(
             page_obj, many=True, context={"request": request}
@@ -82,10 +85,11 @@ class UserViewSet(UserViewSet):
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсет для рецептов."""
+
     queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
+    serializer_class = RecipeReadSerializer
     permission_classes = (IsOwnerOrReadOnly,)
-    pagination_class = PageNumberPagination
+    pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
     filterset_class = RecipeFilter
 
@@ -155,6 +159,7 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 class TagViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для тегов."""
+
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)

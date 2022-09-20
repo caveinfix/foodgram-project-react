@@ -20,7 +20,7 @@ class Tag(models.Model):
 
 class Ingredient(models.Model):
     "Модель ингредиентов."
-    name = models.CharField("Название ингредиента", max_length=40)
+    name = models.CharField("Название ингредиента", max_length=100)
     measurement_unit = models.CharField("Единица измерения", max_length=16)
 
     class Meta:
