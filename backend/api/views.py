@@ -17,7 +17,6 @@ from .serializers import (
     FavoriteRecipeSerializer,
     FollowsSerializer,
     IngredientSerializer,
-    RecipeReadSerializer,
     RecipeSerializer,
     ShopingRecipeSerializer,
     TagSerializer,
@@ -42,7 +41,7 @@ class UserViewSet(UserViewSet):
     serializer_class = UserSerializer
     search_fields = ("username", "email")
     pagination_class = PageNumberPagination
-    # permission_classes = (AllowAny,)
+    permission_classes = (AllowAny,)
 
     @action(
         methods=["POST", "DELETE"],
@@ -87,7 +86,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     """Вьюсет для рецептов."""
 
     queryset = Recipe.objects.all()
-    serializer_class = RecipeReadSerializer
+    serializer_class = RecipeSerializer
     permission_classes = (IsOwnerOrReadOnly,)
     pagination_class = LimitPageNumberPagination
     filter_backends = (DjangoFilterBackend,)
