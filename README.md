@@ -1,7 +1,8 @@
 [![example workflow](https://github.com/caveinfix/foodgram-project-react/actions/workflows/main.yml/badge.svg)](http://fgram.ddns.net/recipes) 
 
 # Проект «Продуктовый помощник» 
-«Продуктовый помощник»: сайт, на котором пользователи будут публиковать рецепты, добавлять чужие рецепты в избранное и подписываться на публикации других авторов. Сервис «Список покупок» позволит пользователям создавать список продуктов, которые нужно купить для приготовления выбранных блюд.
+
+Проект — сайт Foodgram, «Продуктовый помощник». Реализован онлайн-сервис и API для него. На этом сервисе пользователи смогут публиковать рецепты, подписываться на публикации других пользователей, добавлять понравившиеся рецепты в список «Избранное», а перед походом в магазин скачивать сводный список продуктов, необходимых для приготовления одного или нескольких выбранных блюд.
 
 ## Превью
 
@@ -12,7 +13,9 @@
 ## Релиз
 Сайт доступен по ссылке: [fgram.ddns.net](http://fgram.ddns.net/recipes)
 
-Доступ к админке: [fgram.ddns.net/admin/](http://fgram.ddns.net/admin/) (Логин: admin@ya.ru, пароль:admin)
+Документация API: [fgram.ddns.net/api/docs](http://fgram.ddns.net/api/docs/)
+
+Доступ к админке: [fgram.ddns.net/admin/](http://fgram.ddns.net/admin/) (логин: admin@ya.ru, пароль:admin)
 
 
 ## Подготовка к запуску локально
@@ -168,7 +171,10 @@ python manage.py createsuperuser
 
 ## Автор проекта
 
-Филипп [@caveinfix](https://github.com/caveinfix)
+Frontend: [Yandex-Praktikum](https://github.com/yandex-praktikum/foodgram-project-react)
+Дизайн: [Figma](https://www.figma.com/file/HHEJ68zF1bCa7Dx8ZsGxFh/%D0%9F%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2%D1%8B%D0%B9-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D0%BD%D0%B8%D0%BA-(Final)?node-id=0%3A1)
+
+Backend: Филипп [@caveinfix](https://github.com/caveinfix)
 
 e-mail: caveinfix@gmail.com
 
